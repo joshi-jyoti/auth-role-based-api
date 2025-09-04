@@ -1,34 +1,41 @@
-# Role-Based Auth Frontend
 
-This is a React frontend for a role-based authentication system.
+# Role-Based Auth Backend
+
+This is a Node.js, Express, and MongoDB backend for a role-based authentication system.
 
 ## Features
-- Register and login forms with real-time feedback
-- Professional UI with icons and modern layout
-- Role selection (user/admin) during registration
-- Success/error messages for all actions
-- Profile page showing user info and last login
-- Admin panel for user management (delete users)
-- Protected routes (profile, admin panel)
+- JWT-based authentication (register, login, logout)
+- Password hashing with bcrypt
+- Role-based access (user/admin)
+- Protected routes (profile, admin-only user management)
+- Error handling for invalid credentials, unauthorized access, expired tokens
+- Last login time tracking
 
 ## Setup Instructions
 1. Install dependencies:
    ```bash
    npm install
    ```
-2. Start the frontend React app:
-   ```bash
-   npm start
+2. Set up MongoDB (local or Atlas) and update `.env`:
    ```
-3. The app will run at `http://localhost:3000` and connect to the backend at `http://localhost:5000`
+   PORT=5000
+   MONGO_URI=mongodb://127.0.0.1:27017/local
+   JWT_SECRET=your_jwt_secret
+   ```
+3. Start the backend server:
+   ```bash
+   npm run dev
+   ```
 
-## Usage
-- Register a new user or admin
-- Login with your credentials
-- View your profile
-- If admin, access the admin panel to manage users
+## API Endpoints
+- `POST /api/auth/register` — Register a new user
+- `POST /api/auth/login` — Login and get JWT
+- `POST /api/auth/logout` — Logout (client-side)
+- `GET /api/users/profile` — Get logged-in user's profile
+- `GET /api/users` — Get all users (admin only)
+- `DELETE /api/users/:id` — Delete user (admin only)
 
 ## Notes
-- Make sure the backend is running at `http://localhost:5000`
-- All API calls are made to `/api/*` endpoints
-- UI is responsive and works on desktop/mobile
+- Make sure MongoDB is running and accessible
+- Remove any unique index on `email` in the users collection if not using email
+- JWT secret should be a strong random string
